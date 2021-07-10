@@ -78,13 +78,16 @@ public:
     unsigned int getRowCount() const;
     unsigned int getColCount() const;
 
-    friend ostream& operator << (ostream &out , const Matrix &m) {
+    friend ostream& operator << (ostream &out , const Matrix<T> &m) {
         if (m.mRowCount == 0 || m.mColCount == 0 ) {
             out << "<EMPTY>" ;
         } else {
             for(unsigned int i = 0 ; i < m.mRowCount; i++) {
                 for(unsigned int j = 0 ; j < m.mColCount; j++) {
-                    out << setw(8) << right << fixed << setprecision(4) << m.mCells[i][j] << "\t";
+                    if (typeid(T) == typeid(double) || typeid(T) == typeid(float))
+                        out << setw(8) << right << fixed << setprecision(4) << m.mCells[i][j] << "\t";
+                    else 
+                        out << setw(8) << right << fixed <<  m.mCells[i][j] << "\t";
                 }
                 out << endl ;
             }
