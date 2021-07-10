@@ -82,16 +82,19 @@ public:
         if (m.mRowCount == 0 || m.mColCount == 0 ) {
             out << "<EMPTY>" ;
         } else {
+            stringstream ss ;
             for(unsigned int i = 0 ; i < m.mRowCount; i++) {
                 for(unsigned int j = 0 ; j < m.mColCount; j++) {
                     if (typeid(T) == typeid(double) || typeid(T) == typeid(float))
-                        out << setw(8) << right << fixed << setprecision(4) << m.mCells[i][j] << "\t";
+                        ss << setw(8) << right << fixed << setprecision(3) << m.mCells[i][j] << "\t";
                     else 
-                        out << setw(8) << right << fixed <<  m.mCells[i][j] << "\t";
+                        ss << setw(8) << right << fixed <<  m.mCells[i][j] << "\t";
                 }
-                out << endl ;
+                ss <<  endl ;
             }
+            out << ss.str();
         }
+        
         return out ;
     }
 };

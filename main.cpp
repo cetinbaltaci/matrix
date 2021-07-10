@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "Matrix.h"
 
 using namespace std;
@@ -62,6 +63,46 @@ int main(int argc, char *argv[]) {
     }catch (const MatrixException &e){
         cout << e.what() << endl ;
     }
+
+    
+    cout << "Enter 3 Equation (aX + bY + cZ = R) for GAUSS-JORDAN Method" << endl;
+
+    Matrix<double> matrixK(3,3);
+    Matrix<double> matrixR(3,1);
+    const char *var[] = {"X" , "Y", "Z"} ;
+
+    for(unsigned int i = 0 ; i < matrixK.getRowCount(); i++  ) {
+        for(unsigned int j = 0 ; j < matrixR.getRowCount(); j++  ) {
+            cout << (i + 1) << ". EQUATION -> " <<  var[j] << " = " ;
+            cin >> matrixK[i][j] ;
+        }
+        cout << (i + 1) << ". EQUATION -> R = " ;
+        cin >> matrixR[i][0];
+        cout << endl ;
+    }
+
+    cout << "EQUATIONS:" << endl; 
+    for(unsigned int i = 0 ; i < matrixK.getRowCount(); i++  ) {
+        for(unsigned  int j = 0 ; j < matrixK.getColCount(); j++  ) {
+            cout << ( ( j > 0  && matrixK[i][j]  >= 0 ) ? " +" : " " ) << matrixK[i][j] << var[j]  ;
+        }
+        cout << " = " <<  matrixR[i][0] << endl ;
+    }
+
+    cout << "\nSOLVING....\n" ;
+    try{
+        Matrix<double> matrixKInverse = matrixK.inverse();
+        Matrix<double> matrixResult =  matrixKInverse  * matrixR ;
+        cout << "Result -> \t" ;
+        for(unsigned  int i = 0 ; i < matrixR.getRowCount(); i++  ) {
+            cout << "\t" << var[i]  << "= " << matrixResult[i][0] ;
+        }
+        cout << endl ;
+    }catch (const MatrixException &e){
+        cout << e.what() << endl ;
+    }
+
+
 
     cout << "FINISHED\n";
     return EXIT_SUCCESS;

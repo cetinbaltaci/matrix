@@ -104,10 +104,10 @@ Matrix<T> Matrix<T>::operator* (const Matrix<T> &m) {
     if (mColCount != m.mRowCount) 
         throw MatrixException("Column count must be equal to row count of the the other matrix in multiplication !");
 
-    Matrix<T>res(mRowCount, mColCount);
-    for(unsigned int i = 0 ; i < mRowCount ; i++ ) {
+    Matrix<T>res(mRowCount, m.mColCount);
+    for(unsigned int i = 0 ; i < m.mRowCount ; i++ ) {
         for(unsigned int j = 0 ; j < mColCount ; j++ )
-            for(unsigned int k = 0 ; k < mRowCount ; k++ ) {
+            for(unsigned int k = 0 ; k < m.mRowCount ; k++ ) {
                 res[i][j] += mCells[i][k] * m.mCells[k][j];
             }
     }
@@ -183,10 +183,7 @@ Matrix<T> Matrix<T>::operator/ (const T v)  {
     Matrix<T>res(mRowCount, mColCount);
     for(unsigned int i = 0 ; i < mRowCount ; i++ ) {
         for(unsigned int j = 0 ; j < mColCount ; j++ ) {
-            double val = (double) mCells[i][j]  ;
-            val /= v ;
-            //if (val < 1E-14) val = 0.0;
-            res[i][j] = val;
+            res[i][j] = mCells[i][j] / v ;
         }
     }
     return res ;  
