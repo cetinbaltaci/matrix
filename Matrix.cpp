@@ -28,10 +28,6 @@ Matrix<T>::Matrix(const vector<vector<T>> &vec)
 
 template <typename T>
 Matrix<T>::~Matrix() {
-    for (unsigned int i = 0 ; i < mRowCount ; i++)
-        mCells[i].clear();
-    mCells.clear();
-    mRowCount = mColCount = 0 ;
 }
 
 template <typename T>
@@ -105,11 +101,13 @@ Matrix<T> Matrix<T>::operator* (const Matrix<T> &m) {
         throw MatrixException("Column count must be equal to row count of the the other matrix in multiplication !");
 
     Matrix<T>res(mRowCount, m.mColCount);
-    for(unsigned int i = 0 ; i < m.mRowCount ; i++ ) {
-        for(unsigned int j = 0 ; j < mColCount ; j++ )
+    for(unsigned int i = 0 ; i < res.mRowCount ; i++ ) {
+        for(unsigned int j = 0 ; j < res.mColCount ; j++ ){
+            res.mCells[i][j] = 0 ;
             for(unsigned int k = 0 ; k < m.mRowCount ; k++ ) {
-                res[i][j] += mCells[i][k] * m.mCells[k][j];
+                res.mCells[i][j] += mCells[i][k] * m.mCells[k][j];
             }
+        }
     }
     return res;
 }
@@ -266,8 +264,8 @@ Matrix<T> Matrix<T>::inverse() {
     T det = determinant();
     if (det == 0)
         throw MatrixException("Singular matrix, can't find its inverse !"); 
- 
-    return adjoint() / det;
+
+    return  adjoint() / det;
 }
 
 template <typename T>
