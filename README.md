@@ -8,5 +8,6 @@ make
 
 # execute
 ./bin/matrix
+
 cat in.txt | ./bin/matrix
  
