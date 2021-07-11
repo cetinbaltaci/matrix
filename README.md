@@ -3,6 +3,7 @@ Thanks to https://www.geeksforgeeks.org/adjoint-inverse-matrix/ for determinant 
 
 # compile
 mkdir -p bin
+
 make
 
 # execute
