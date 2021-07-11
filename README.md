@@ -8,6 +8,6 @@ make
 
 # execute
 ./bin/matrix
-
+---- or ----
 cat in.txt | ./bin/matrix
  
