@@ -12,10 +12,7 @@ int main(int argc, char *argv[]) {
     
     
     Matrix<float> matrixA(vec);
-    cout << "matrixA: \n" << matrixA << endl ;
-
     Matrix<float> matrixB(4,4);
-
     
     for(unsigned int i= 0 ; i < matrixB.getRowCount(); i++)
         for(unsigned int j= 0 ; j < matrixB.getColCount(); j++)
