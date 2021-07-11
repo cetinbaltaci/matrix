@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
                     {-3, 1, 5, 0},
                     {3, -1, -9, 4}} ;
     
+    
     Matrix<float> matrixA(vec);
     cout << "matrixA: \n" << matrixA << endl ;
 
@@ -63,17 +64,28 @@ int main(int argc, char *argv[]) {
     }catch (const MatrixException &e){
         cout << e.what() << endl ;
     }
+    const string varName = string("xyzwq") ;
+    const string vars    = string("ABCDE") ;
 
+
+    int eqCount = 0 ; 
+    do {
+        cout << "Enter Equation Count (2..5):" << endl ;
+        cin >> eqCount ;
+    } while (!(eqCount > 1 && eqCount < 6 )) ;
+
+    for (int i = 0 ; i < eqCount ; i++)
+        cout << ((i > 0 ) ? " + " : "") <<  vars[i] << varName[i]  ;
+    cout << " = R " << endl ;
+
+
+    Matrix<double> matrixK(eqCount, eqCount);
+    Matrix<double> matrixR(eqCount, 1);
     
-    cout << "Enter 3 Equation (aX + bY + cZ = R) for GAUSS-JORDAN Method" << endl;
-
-    Matrix<double> matrixK(3,3);
-    Matrix<double> matrixR(3,1);
-    const char *var[] = {"X" , "Y", "Z"} ;
 
     for(unsigned int i = 0 ; i < matrixK.getRowCount(); i++  ) {
-        for(unsigned int j = 0 ; j < matrixR.getRowCount(); j++  ) {
-            cout << (i + 1) << ". EQUATION -> " <<  var[j] << " = " ;
+        for(unsigned int j = 0 ; j < matrixK.getColCount(); j++  ) {
+            cout << (i + 1) << ". EQUATION -> " <<  vars[j] << varName[j] << " ----- " <<  vars[j] <<" = " ;
             cin >> matrixK[i][j] ;
         }
         cout << (i + 1) << ". EQUATION -> R = " ;
@@ -84,24 +96,26 @@ int main(int argc, char *argv[]) {
     cout << "EQUATIONS:" << endl; 
     for(unsigned int i = 0 ; i < matrixK.getRowCount(); i++  ) {
         for(unsigned  int j = 0 ; j < matrixK.getColCount(); j++  ) {
-            cout << ( ( j > 0  && matrixK[i][j]  >= 0 ) ? " +" : " " ) << matrixK[i][j] << var[j]  ;
+            cout << ( ( j > 0  && matrixK[i][j]  >= 0 ) ? " +" : " " ) << matrixK[i][j] << varName[j]  ;
         }
         cout << " = " <<  matrixR[i][0] << endl ;
     }
+
+
 
     cout << "\nSOLVING....\n" ;
     try{
         Matrix<double> matrixKInverse = matrixK.inverse();
         Matrix<double> matrixResult =  matrixKInverse  * matrixR ;
+        cout << "matrixResult: " << matrixResult << endl;
         cout << "Result -> \t" ;
         for(unsigned  int i = 0 ; i < matrixR.getRowCount(); i++  ) {
-            cout << "\t" << var[i]  << "= " << matrixResult[i][0] ;
+            cout << "\t" << varName[i]  << "= " << matrixResult[i][0] ;
         }
         cout << endl ;
     }catch (const MatrixException &e){
         cout << e.what() << endl ;
     }
-
 
 
     cout << "FINISHED\n";
